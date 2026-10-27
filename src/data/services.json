@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Interior Design",
+    "description": "Composing calm living spaces with custom oak joinery, honed stone, and warm daylight.",
+    "image": {
+      "src": "/images/service-interior-design.jpg",
+      "alt": "Warm minimalist living room featuring floor-to-ceiling steel windows, natural oak cabinetry, linen seating, and a travertine fireplace"
+    }
+  },
+  {
+    "title": "Architecture Design",
+    "description": "Shaping residential structures that balance natural light, raw timber, and enduring form.",
+    "image": {
+      "src": "/images/service-architecture-design.jpg",
+      "alt": "Contemporary timber and white-washed wood residence with a stone paver courtyard and wooden deck steps surrounded by autumn trees"
+    }
+  },
+  {
+    "title": "Spatial Planning",
+    "description": "Organizing sightlines, room proportions, and courtyard thresholds for natural daily flow.",
+    "image": {
+      "src": "/images/service-spatial-planning.jpg",
+      "alt": "Sunlit limestone gallery hallway opening into a timber-beamed living pavilion and landscaped courtyard"
+    }
+  }
+]

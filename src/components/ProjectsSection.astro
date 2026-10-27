@@ -1,4 +1,6 @@
 ---
+import projectsData from "../data/projects.json";
+
 export interface ProjectItem {
   title: string;
   architect: string;
@@ -22,111 +24,30 @@ const {
   sectionLabel = "Selected Work",
   headline = "Built With Intention",
   subtitle = "Explore a selection of projects across residential, cultural, hospitality, and retreat architecture.",
-  projects = [
-    {
-      title: "Kamo River Courtyard House",
-      architect: "Kenji Takahashi (2023 - 2025)",
-      location: "Sakyo Ward | Kyoto, Japan",
-      size: "4,800 sq ft across a two-story main residence, tea pavilion, and sunken moss courtyard",
-      aesthetics:
-        "Charred cedar rainscreen, board-formed concrete walls, and bronze-framed glass screens opening to an interior water basin",
-      image: {
-        src: "/images/project-01-kyoto.jpg",
-        alt: "Contemporary Japanese courtyard house at dusk with charred cedar cladding, glowing glass corner, and stone reflection pool",
-      },
-    },
-    {
-      title: "Bergen Fjord Glass Pavilion",
-      architect: "Astrid Lindqvist (2022 - 2024)",
-      location: "Hardangerfjord | Vestland, Norway",
-      size: "6,200 sq ft encompassing cantilevered living hall, guest wing, and boathouse terrace",
-      aesthetics:
-        "Structural glued-laminated pine beams, raw granite plinths quarried on site, and triple-glazed curtain walls framing coastal views",
-      image: {
-        src: "/images/project-02-bergen.jpg",
-        alt: "Modern Nordic timber and glass pavilion perched on coastal granite bedrock overlooking a Norwegian fjord",
-      },
-    },
-    {
-      title: "Sonoma Vineyard Sanctuary",
-      architect: "Elena Rostova (2023 - 2025)",
-      location: "Dry Creek Valley | Healdsburg, CA",
-      size: "8,400 sq ft including main rammed-earth residence, shaded loggia, and subterranean cellar",
-      aesthetics:
-        "Compacted earth walls, weathered Corten steel roof overhangs, and reclaimed white oak ceilings shading a flagstone courtyard",
-      image: {
-        src: "/images/project-03-sonoma.jpg",
-        alt: "California vineyard residence with rammed earth walls, cantilevered Corten steel roof, and stone courtyard with olive trees",
-      },
-    },
-    {
-      title: "Alpine Timber Atelier",
-      architect: "Lukas Vonlanthen (2021 - 2023)",
-      location: "Engadin Valley | Graubünden, Switzerland",
-      size: "5,150 sq ft featuring double-height design studio, library mezzanine, and private living quarters",
-      aesthetics:
-        "Untreated larch vertical siding, bush-hammered concrete core, and deep-set timber window frames engineered for alpine snow loads",
-      image: {
-        src: "/images/project-04-alpine.jpg",
-        alt: "Swiss alpine timber atelier with weathered vertical larch cladding and glowing double-height corner studio windows at twilight",
-      },
-    },
-    {
-      title: "Oaxacan Terracotta Residence",
-      architect: "Mateo Morales (2023 - 2025)",
-      location: "San Felipe del Agua | Oaxaca, Mexico",
-      size: "5,900 sq ft arranged around three open-air peristyle courtyards and a shaded botanical terrace",
-      aesthetics:
-        "Hand-pressed local clay brick, pigmented lime plaster walls, and tropical parota hardwood pergolas filtering southern sunlight",
-      image: {
-        src: "/images/project-05-oaxaca.jpg",
-        alt: "Mexican courtyard residence in warm terracotta brick and earth plaster with timber pergola shadows and agave garden",
-      },
-    },
-    {
-      title: "Aegean Limestone Cliff Villa",
-      architect: "Nikos Papadopoulos (2022 - 2024)",
-      location: "Naoussa Coast | Paros, Greece",
-      size: "7,100 sq ft spanning terraced living volumes, shaded pergola dining deck, and coastal lap pool",
-      aesthetics:
-        "Dry-stacked Cycladic stone masonry, warm lime-washed plaster volumes, and chestnut timber pergolas overlooking the sea",
-      image: {
-        src: "/images/project-06-aegean.jpg",
-        alt: "Cycladic limestone villa with dry-stacked stone walls, chestnut wood pergola, and lap pool overlooking the Aegean Sea",
-      },
-    },
-  ],
+  projects = projectsData,
 } = Astro.props;
 
 const totalFormatted = String(projects.length).padStart(2, "0");
 ---
 
-<section id="projects" aria-labelledby="projects-heading" class="section-shell">
-  <div class="section-container">
+<section id="projects" aria-label={sectionLabel} class="section-shell">
+  <project-slider class="section-container block">
     <div class="section-divider flex flex-col justify-between gap-4 md:flex-row md:items-end">
       <div>
-        <span class="text-section-label block text-sm uppercase tracking-widest text-slate-500">
-          {sectionLabel}
-        </span>
-        <h2
-          id="projects-heading"
-          class="text-heading mt-3 text-3xl sm:text-4xl"
-        >
-          {headline}
-        </h2>
+        <span class="text-section-label block">{sectionLabel}</span>
+        <h2 class="text-heading mt-3 text-3xl sm:text-4xl">{headline}</h2>
       </div>
 
-      <p class="text-body max-w-md text-gray-600 md:text-right">{subtitle}</p>
+      <p class="text-body max-w-md md:text-right">{subtitle}</p>
     </div>
 
     <div
-      id="projects-viewport"
       role="region"
       aria-roledescription="carousel"
       aria-label="Selected architectural projects"
       class="mt-8 w-full overflow-hidden md:mt-10"
     >
-      <div id="projects-track" class="flex w-full will-change-transform">
+      <div data-slider-track class="flex w-full will-change-transform">
         {projects.map((project, index) => (
           <article
             data-project-slide
@@ -148,7 +69,7 @@ const totalFormatted = String(projects.length).padStart(2, "0");
             </div>
 
             <div class="flex flex-col justify-center md:col-span-6 lg:col-span-6">
-              <span class="text-meta text-gray-600">
+              <span class="text-meta">
                 Project {String(index + 1).padStart(2, "0")} / {totalFormatted}
               </span>
 
@@ -156,25 +77,23 @@ const totalFormatted = String(projects.length).padStart(2, "0");
 
               <dl class="mt-6 grid grid-cols-1 gap-6 border-t border-ink/15 pt-6 sm:grid-cols-2">
                 <div>
-                  <dt class="text-meta text-gray-600">Project Architect</dt>
+                  <dt class="text-meta">Project Architect</dt>
                   <dd class="text-body-strong mt-1.5">{project.architect}</dd>
                 </div>
 
                 <div>
-                  <dt class="text-meta text-gray-600">Location</dt>
+                  <dt class="text-meta">Location</dt>
                   <dd class="text-body-strong mt-1.5">{project.location}</dd>
                 </div>
 
                 <div class="sm:col-span-2">
-                  <dt class="text-meta text-gray-600">Size</dt>
-                  <dd class="text-body mt-1.5 text-gray-600">{project.size}</dd>
+                  <dt class="text-meta">Size</dt>
+                  <dd class="text-body mt-1.5">{project.size}</dd>
                 </div>
 
                 <div class="sm:col-span-2">
-                  <dt class="text-meta text-gray-600">Aesthetics</dt>
-                  <dd class="text-body mt-1.5 text-gray-600">
-                    {project.aesthetics}
-                  </dd>
+                  <dt class="text-meta">Aesthetics</dt>
+                  <dd class="text-body mt-1.5">{project.aesthetics}</dd>
                 </div>
               </dl>
             </div>
@@ -189,10 +108,9 @@ const totalFormatted = String(projects.length).padStart(2, "0");
       aria-label="Project slide controls"
     >
       <button
-        id="projects-prev"
+        data-slider-prev
         type="button"
         aria-label="Previous project"
-        aria-controls="projects-track"
         class="btn-icon-circle"
       >
         <svg
@@ -210,7 +128,7 @@ const totalFormatted = String(projects.length).padStart(2, "0");
       </button>
 
       <span
-        id="projects-current-num"
+        data-slider-current
         aria-live="polite"
         class="text-meta text-ink w-6 text-center font-semibold tabular-nums"
       >
@@ -219,21 +137,20 @@ const totalFormatted = String(projects.length).padStart(2, "0");
 
       <div class="bg-ink/15 relative h-0.5 flex-1 overflow-hidden rounded-full">
         <div
-          id="projects-progress-bar"
+          data-slider-progress
           class="bg-ink h-full transition-all duration-300 ease-out"
           style={`width: ${(1 / projects.length) * 100}%`}
         ></div>
       </div>
 
-      <span class="text-meta w-6 text-center text-gray-600 tabular-nums">
+      <span class="text-meta w-6 text-center tabular-nums">
         {totalFormatted}
       </span>
 
       <button
-        id="projects-next"
+        data-slider-next
         type="button"
         aria-label="Next project"
-        aria-controls="projects-track"
         class="btn-icon-circle"
       >
         <svg
@@ -250,102 +167,118 @@ const totalFormatted = String(projects.length).padStart(2, "0");
         </svg>
       </button>
     </div>
-  </div>
+  </project-slider>
 </section>
 
 <script>
-  const initProjectsSlider = () => {
-    const track = document.getElementById("projects-track");
-    const prevBtn = document.getElementById("projects-prev");
-    const nextBtn = document.getElementById("projects-next");
-    const currentNumEl = document.getElementById("projects-current-num");
-    const progressBarEl = document.getElementById("projects-progress-bar");
+  class ProjectSlider extends HTMLElement {
+    connectedCallback() {
+      const track = this.querySelector<HTMLElement>("[data-slider-track]");
+      const prevBtn =
+        this.querySelector<HTMLButtonElement>("[data-slider-prev]");
+      const nextBtn =
+        this.querySelector<HTMLButtonElement>("[data-slider-next]");
+      const currentNumEl = this.querySelector<HTMLElement>(
+        "[data-slider-current]",
+      );
+      const progressBarEl = this.querySelector<HTMLElement>(
+        "[data-slider-progress]",
+      );
 
-    if (!track || track.dataset.initialized === "true") return;
+      if (!track || track.dataset.initialized === "true") return;
 
-    const originalSlides = Array.from(
-      track.querySelectorAll<HTMLElement>("[data-project-slide]"),
-    );
-    const total = originalSlides.length;
-    if (total === 0) return;
+      const originalSlides = Array.from(
+        track.querySelectorAll<HTMLElement>("[data-project-slide]"),
+      );
+      const total = originalSlides.length;
+      if (total === 0) return;
 
-    track.dataset.initialized = "true";
+      track.dataset.initialized = "true";
 
-    const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
-    const lastClone = originalSlides[total - 1].cloneNode(true) as HTMLElement;
+      const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
+      const lastClone = originalSlides[total - 1].cloneNode(
+        true,
+      ) as HTMLElement;
 
-    firstClone.dataset.clone = "first";
-    firstClone.setAttribute("aria-hidden", "true");
-    firstClone.inert = true;
+      firstClone.dataset.clone = "first";
+      firstClone.setAttribute("aria-hidden", "true");
+      firstClone.inert = true;
 
-    lastClone.dataset.clone = "last";
-    lastClone.setAttribute("aria-hidden", "true");
-    lastClone.inert = true;
+      lastClone.dataset.clone = "last";
+      lastClone.setAttribute("aria-hidden", "true");
+      lastClone.inert = true;
 
-    track.prepend(lastClone);
-    track.append(firstClone);
+      track.prepend(lastClone);
+      track.append(firstClone);
 
-    const TRANSITION_CSS = "transform 550ms cubic-bezier(0.22, 1, 0.36, 1)";
-    let currentIndex = 1;
-    let isTransitioning = false;
+      const TRANSITION_CSS = "transform 550ms cubic-bezier(0.22, 1, 0.36, 1)";
+      let currentIndex = 1;
+      let isTransitioning = false;
 
-    const getRealIndex = (trackIdx: number) =>
-      (((trackIdx - 1) % total) + total) % total;
+      const getRealIndex = (trackIdx: number) =>
+        (((trackIdx - 1) % total) + total) % total;
 
-    const updateProgressUI = (realIndex: number) => {
-      if (currentNumEl) {
-        currentNumEl.textContent = String(realIndex + 1).padStart(2, "0");
-      }
-      if (progressBarEl) {
-        progressBarEl.style.width = `${((realIndex + 1) / total) * 100}%`;
-      }
-      originalSlides.forEach((slide, idx) => {
-        slide.setAttribute("aria-hidden", idx === realIndex ? "false" : "true");
-      });
-    };
+      const updateProgressUI = (realIndex: number) => {
+        if (currentNumEl) {
+          currentNumEl.textContent = String(realIndex + 1).padStart(2, "0");
+        }
+        if (progressBarEl) {
+          progressBarEl.style.width = `${((realIndex + 1) / total) * 100}%`;
+        }
+        originalSlides.forEach((slide, idx) => {
+          slide.setAttribute(
+            "aria-hidden",
+            idx === realIndex ? "false" : "true",
+          );
+        });
+      };
 
-    track.style.transition = "none";
-    track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
-    void track.offsetWidth;
-    track.style.transition = TRANSITION_CSS;
-
-    const moveToIndex = (nextIndex: number) => {
-      if (isTransitioning) return;
-      isTransitioning = true;
-      currentIndex = nextIndex;
-      track.style.transition = TRANSITION_CSS;
+      track.style.transition = "none";
       track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
-      updateProgressUI(getRealIndex(currentIndex));
-    };
+      void track.offsetWidth;
+      track.style.transition = TRANSITION_CSS;
 
-    track.addEventListener("transitionend", (event) => {
-      if (event.target !== track || event.propertyName !== "transform") return;
-
-      if (currentIndex === total + 1) {
-        track.style.transition = "none";
-        currentIndex = 1;
-        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
-        void track.offsetWidth;
+      const moveToIndex = (nextIndex: number) => {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex = nextIndex;
         track.style.transition = TRANSITION_CSS;
-      } else if (currentIndex === 0) {
-        track.style.transition = "none";
-        currentIndex = total;
         track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
-        void track.offsetWidth;
-        track.style.transition = TRANSITION_CSS;
-      }
+        updateProgressUI(getRealIndex(currentIndex));
+      };
 
-      isTransitioning = false;
-    });
+      track.addEventListener("transitionend", (event) => {
+        if (event.target !== track || event.propertyName !== "transform")
+          return;
 
-    prevBtn?.addEventListener("click", () => {
-      moveToIndex(currentIndex - 1);
-    });
+        if (currentIndex === total + 1) {
+          track.style.transition = "none";
+          currentIndex = 1;
+          track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+          void track.offsetWidth;
+          track.style.transition = TRANSITION_CSS;
+        } else if (currentIndex === 0) {
+          track.style.transition = "none";
+          currentIndex = total;
+          track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+          void track.offsetWidth;
+          track.style.transition = TRANSITION_CSS;
+        }
 
-    nextBtn?.addEventListener("click", () => {
-      moveToIndex(currentIndex + 1);
-    });
-  };
+        isTransitioning = false;
+      });
 
-  initProjectsSlider();
+      prevBtn?.addEventListener("click", () => {
+        moveToIndex(currentIndex - 1);
+      });
+
+      nextBtn?.addEventListener("click", () => {
+        moveToIndex(currentIndex + 1);
+      });
+    }
+  }
+
+  if (!customElements.get("project-slider")) {
+    customElements.define("project-slider", ProjectSlider);
+  }
 </script>

@@ -1,11 +1,44 @@
 ---
+import "@fontsource/plus-jakarta-sans/300.css";
+import "@fontsource/plus-jakarta-sans/400.css";
+import "@fontsource/plus-jakarta-sans/500.css";
+import "@fontsource/plus-jakarta-sans/600.css";
+import "@fontsource/plus-jakarta-sans/700.css";
 import "../styles/global.css";
+import { siteConfig } from "../site.config";
 
-interface Props {
+export interface Props {
   title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: "website" | "article";
+  twitterCard?: "summary_large_image" | "summary";
+  twitterSite?: string;
+  twitterCreator?: string;
+  noindex?: boolean;
 }
 
-const { title = "Aetherion: Architecture & Spatial Design" } = Astro.props;
+const {
+  title = siteConfig.defaultTitle,
+  description = siteConfig.description,
+  canonicalUrl,
+  ogImage = siteConfig.ogImage,
+  ogImageAlt = siteConfig.ogImageAlt,
+  ogType = siteConfig.ogType,
+  twitterCard = siteConfig.twitterCard,
+  twitterSite = siteConfig.twitterSite,
+  twitterCreator = siteConfig.twitterCreator,
+  noindex = false,
+} = Astro.props;
+
+const baseUrl = Astro.site?.toString() ?? siteConfig.siteUrl;
+const resolvedCanonicalUrl =
+  canonicalUrl ?? new URL(Astro.url.pathname, baseUrl).toString();
+const resolvedOgImage = ogImage.startsWith("http")
+  ? ogImage
+  : new URL(ogImage, baseUrl).toString();
 ---
 
 <!doctype html>
@@ -14,15 +47,29 @@ const { title = "Aetherion: Architecture & Spatial Design" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.author} />
+    <link rel="canonical" href={resolvedCanonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteConfig.siteName} />
+    <meta property="og:locale" content={siteConfig.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={resolvedCanonicalUrl} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content={twitterCard} />
+    {twitterSite && <meta name="twitter:site" content={twitterSite} />}
+    {twitterCreator && <meta name="twitter:creator" content={twitterCreator} />}
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
   </head>
-  <body class="bg-canvas text-ink antialiased selection:bg-slate selection:text-white">
+  <body class="bg-canvas text-ink selection:bg-slate selection:text-canvas antialiased">
     <slot />
   </body>
 </html>

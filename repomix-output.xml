@@ -1,0 +1,1944 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+public/
+  images/
+    about-courtyard.jpg
+    about-pavilion.jpg
+    hero-main.jpg
+    hero-tall-1.jpg
+    hero-tall-2.jpg
+    project-01-kyoto.jpg
+    project-02-bergen.jpg
+    project-03-sonoma.jpg
+    project-04-alpine.jpg
+    project-05-oaxaca.jpg
+    project-06-aegean.jpg
+    service-architecture-design.jpg
+    service-interior-design.jpg
+    service-spatial-planning.jpg
+src/
+  components/
+    AboutSection.astro
+    ContactSection.astro
+    FooterSection.astro
+    HeroSection.astro
+    NavBar.astro
+    ProjectsSection.astro
+    ServicesSection.astro
+  layouts/
+    Layout.astro
+  pages/
+    index.astro
+  styles/
+    global.css
+.gitignore
+astro.config.mjs
+package.json
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/AboutSection.astro">
+---
+interface FeatureItem {
+  label: string;
+  icon: "natural-materials" | "meaningful-living";
+}
+
+interface Props {
+  sectionLabel?: string;
+  paragraph?: string;
+  image?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
+  features?: FeatureItem[];
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  sectionLabel = "About Us",
+  paragraph = "Rooted in tactile honesty and spatial harmony, we weave raw stone, warm timber, and sculpted daylight into enduring sanctuaries that quiet the mind and ground everyday living.",
+  image = {
+    src: "/images/about-courtyard.jpg",
+    alt: "Open-air travertine and concrete architectural courtyard with a timber skylight oculus and reflecting pool",
+    caption:
+      "Sculpting Light & Matter: Every threshold is choreographed to blur the boundary between built form and living landscape.",
+  },
+  features = [
+    { label: "Crafted with Natural Materials", icon: "natural-materials" },
+    { label: "Designed for Meaningful Living", icon: "meaningful-living" },
+  ],
+} = Astro.props;
+
+const words = paragraph.split(" ");
+---
+
+<section id="about" aria-labelledby="about-heading" class="section-shell">
+  <div class="section-container">
+    <div class="section-divider">
+      <h2
+        id="about-heading"
+        class="text-section-label text-sm uppercase tracking-widest text-slate-500"
+      >
+        {sectionLabel}
+      </h2>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-10 md:mt-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+      <div class="flex flex-col justify-between gap-8 lg:col-span-5">
+        <p id="about-scroll-text" class="text-heading text-3xl sm:text-4xl">
+          {words.map((word, index) => (
+            <>
+              <span
+                data-scroll-word
+                data-index={index}
+                class="text-gray-600 transition-colors duration-200 ease-out"
+              >
+                {word}
+              </span>{" "}
+            </>
+          ))}
+        </p>
+
+        <div class="flex flex-col gap-4 border-t border-ink/15 pt-6 sm:flex-row sm:flex-wrap lg:flex-col">
+          {features.map((feature) => (
+            <div class="flex items-center gap-3.5">
+              <div class="bg-surface text-ink flex h-12 w-12 shrink-0 items-center justify-center rounded-xl">
+                {feature.icon === "natural-materials" ? (
+                  <svg
+                    class="h-6 w-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.65"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20.24 3.76C19.72 3.24 12.66 2.5 7.58 7.58C3.52 11.64 3.82 16.59 4.5 18.5C6.41 19.18 11.36 19.48 15.42 15.42C20.5 10.34 19.76 3.28 20.24 3.76Z" />
+                    <path d="M3.5 20.5C6.5 17.5 10.5 13.5 15.5 9.5" />
+                    <path d="M9.5 14.3L9.2 10.5" />
+                    <path d="M13.5 11.2L10.8 11.5" />
+                  </svg>
+                ) : (
+                  <svg
+                    class="h-6 w-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.65"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3.5 10.6569C3.5 9.7534 3.5 9.30166 3.71352 8.90569C3.92705 8.50973 4.30292 8.25915 5.05466 7.75799L9.55466 4.75799C10.9434 3.83214 11.6378 3.36922 12.4399 3.36922C13.242 3.36922 13.9364 3.83214 15.3251 4.75799L19.8251 7.75799C20.5769 8.25915 20.9527 8.50973 21.1663 8.90569C21.3798 9.30166 21.3798 9.7534 21.3798 10.6569V16C21.3798 17.8856 21.3798 18.8284 20.794 19.4142C20.2082 20 19.2654 20 17.3798 20H7.5C5.61438 20 4.67157 20 4.08579 19.4142C3.5 18.8284 3.5 17.8856 3.5 16V10.6569Z" />
+                    <path d="M12.44 16.2C12.44 16.2 9.2 14.15 9.2 11.95C9.2 10.85 10.05 10 11.05 10C11.68 10 12.18 10.35 12.44 10.82C12.7 10.35 13.2 10 13.83 10C14.83 10 15.68 10.85 15.68 11.95C15.68 14.15 12.44 16.2 12.44 16.2Z" />
+                  </svg>
+                )}
+              </div>
+              <span class="text-body-strong">{feature.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="card-frame group relative">
+          <img
+            src={image.src}
+            alt={image.alt}
+            class="h-85 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-105 md:h-115"
+            loading="lazy"
+          />
+
+          <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-ink/85 via-ink/25 to-transparent"></div>
+
+          <div
+            class="border-white/25 bg-ink/45 absolute top-6 left-6 flex h-11 w-11 items-center justify-center rounded-2xl border text-white backdrop-blur-md"
+            aria-hidden="true"
+          >
+            <svg
+              class="h-6 w-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.65"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z"></path>
+              <path d="M12 12L20 7.5"></path>
+              <path d="M12 12V21"></path>
+              <path d="M12 12L4 7.5"></path>
+              <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+            </svg>
+          </div>
+
+          <div class="absolute bottom-6 left-6 max-w-md pr-6">
+            <p class="text-body text-white">
+              Sculpting Light &amp; Matter: Every threshold is choreographed to
+              blur the boundary between built form and living landscape.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const textContainer = document.getElementById("about-scroll-text");
+  const wordElements =
+    document.querySelectorAll<HTMLElement>("[data-scroll-word]");
+
+  const updateScrollReveal = () => {
+    if (!textContainer || wordElements.length === 0) return;
+
+    const rect = textContainer.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+
+    const start = viewportHeight * 0.85;
+    const end = viewportHeight * 0.3;
+
+    const rawProgress = (start - rect.top) / (start - end);
+    const progress = Math.max(0, Math.min(1, rawProgress));
+
+    const totalWords = wordElements.length;
+    const activeWordCount = Math.floor(progress * totalWords);
+
+    wordElements.forEach((wordEl, idx) => {
+      if (idx <= activeWordCount && progress > 0) {
+        wordEl.classList.remove("text-gray-600");
+        wordEl.classList.add("text-ink");
+      } else {
+        wordEl.classList.remove("text-ink");
+        wordEl.classList.add("text-gray-600");
+      }
+    });
+  };
+
+  window.addEventListener("scroll", updateScrollReveal, { passive: true });
+  window.addEventListener("resize", updateScrollReveal, { passive: true });
+  updateScrollReveal();
+</script>
+</file>
+
+<file path="src/components/ContactSection.astro">
+---
+export interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  project: string;
+  location: string;
+  year: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+}
+
+interface Props {
+  sectionLabel?: string;
+  headline?: string;
+  subtitle?: string;
+  testimonial?: Testimonial;
+  companyPlaceholder?: string;
+  projectTypes?: string[];
+  budgetRanges?: string[];
+  submitLabel?: string;
+}
+
+const {
+  sectionLabel = "Contact Us",
+  headline = "Start a Conversation",
+  subtitle = "Tell us where you are now and where you want the work to go.",
+  testimonial = {
+    quote:
+      "Aetherion translated our steep hillside parcel into a home of remarkable stillness. Every morning the light moves across the rammed-earth walls and courtyard water basin exactly as they sketched on day one.",
+    author: "Marcus & Claire Vance",
+    role: "Private Residential Clients",
+    project: "Sonoma Vineyard Sanctuary",
+    location: "Healdsburg, CA",
+    year: "Completed 2025",
+    image: {
+      src: "/images/project-03-sonoma.jpg",
+      alt: "Rammed earth walls and shaded stone courtyard of the Sonoma Vineyard Sanctuary",
+    },
+  },
+  companyPlaceholder = "Private client, studio, or hospitality group (optional)",
+  projectTypes = [
+    "Residential Architecture",
+    "Cultural & Pavilion Design",
+    "Hospitality & Retreat",
+    "Atelier & Commercial Workspace",
+    "Interior Design & Spatial Planning",
+  ],
+  budgetRanges = ["$250k - $500k", "$500k - $1.2M", "$1.2M - $3M", "$3M+"],
+  submitLabel = "Send Inquiry",
+} = Astro.props;
+---
+
+<section id="contact" aria-labelledby="contact-heading" class="section-shell">
+  <div class="section-container">
+    <div class="section-divider flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <div>
+        <span class="text-section-label block text-sm uppercase tracking-widest text-slate-500">
+          {sectionLabel}
+        </span>
+        <h2 id="contact-heading" class="text-heading mt-3 text-3xl sm:text-4xl">
+          {headline}
+        </h2>
+      </div>
+
+      <p class="text-body max-w-md text-gray-600 md:text-right">{subtitle}</p>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 items-start gap-10 md:mt-10 lg:grid-cols-12 lg:gap-12">
+      <aside
+        aria-label="Client testimonial"
+        class="card-frame flex flex-col justify-between p-7 shadow-none sm:p-8 lg:col-span-5"
+      >
+        <div>
+          <div class="flex items-center justify-between gap-4 border-b border-ink/12 pb-5">
+            <span class="text-ui-label text-gray-600">Client Perspective</span>
+            <span class="text-meta text-gray-600">{testimonial.year}</span>
+          </div>
+
+          <blockquote class="mt-6">
+            <p class="text-card-title leading-relaxed font-normal text-ink">
+              &ldquo;{testimonial.quote}&rdquo;
+            </p>
+          </blockquote>
+        </div>
+
+        <div class="mt-8 border-t border-ink/12 pt-6">
+          <div class="flex items-center gap-4">
+            <img
+              src={testimonial.image.src}
+              alt={testimonial.image.alt}
+              class="h-14 w-14 shrink-0 rounded-2xl border border-ink/10 object-cover"
+              loading="lazy"
+            />
+            <div>
+              <p class="text-body-strong text-ink">{testimonial.author}</p>
+              <p class="text-meta mt-0.5 text-gray-600">{testimonial.role}</p>
+              <p class="text-meta mt-1 text-gray-600">
+                {testimonial.project} &middot; {testimonial.location}
+              </p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <form
+        id="contact-inquiry-form"
+        novalidate
+        class="flex flex-col gap-7 lg:col-span-7"
+      >
+        <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 sm:gap-6">
+          <div class="flex flex-col gap-2">
+            <label for="inquiry-name" class="text-ui-label text-gray-600">
+              Name
+            </label>
+            <input
+              id="inquiry-name"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              placeholder="Your name"
+              class="form-input"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="inquiry-email" class="text-ui-label text-gray-600">
+              Email
+            </label>
+            <input
+              id="inquiry-email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder="name@example.com"
+              class="form-input"
+            />
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="inquiry-company" class="text-ui-label text-gray-600">
+            Company
+          </label>
+          <input
+            id="inquiry-company"
+            name="company"
+            type="text"
+            autocomplete="organization"
+            placeholder={companyPlaceholder}
+            class="form-input"
+          />
+        </div>
+
+        <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 sm:gap-6">
+          <div class="flex flex-col gap-2">
+            <label
+              for="inquiry-project-type"
+              class="text-ui-label text-gray-600"
+            >
+              Project Type
+            </label>
+            <div class="relative">
+              <select
+                id="inquiry-project-type"
+                name="projectType"
+                required
+                class="form-input appearance-none pr-8"
+              >
+                <option value="" disabled selected>
+                  Select project type
+                </option>
+                {projectTypes.map((type) => (
+                  <option value={type}>{type}</option>
+                ))}
+              </select>
+              <svg
+                class="text-ink pointer-events-none absolute top-1/2 right-1 h-4 w-4 -translate-y-1/2"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 9L12 15L18 9"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="inquiry-budget" class="text-ui-label text-gray-600">
+              Budget
+            </label>
+            <div class="relative">
+              <select
+                id="inquiry-budget"
+                name="budget"
+                required
+                class="form-input appearance-none pr-8"
+              >
+                <option value="" disabled selected>
+                  Select range
+                </option>
+                {budgetRanges.map((range) => (
+                  <option value={range}>{range}</option>
+                ))}
+              </select>
+              <svg
+                class="text-ink pointer-events-none absolute top-1/2 right-1 h-4 w-4 -translate-y-1/2"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 9L12 15L18 9"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2.5">
+          <label for="inquiry-message" class="text-ui-label text-gray-600">
+            Message
+          </label>
+          <textarea
+            id="inquiry-message"
+            name="message"
+            rows="4"
+            required
+            placeholder="What are you building, and what should it become?"
+            class="focus-visible:outline-ink h-36 w-full scroll-mt-28 resize-y rounded-2xl border border-gray-600 bg-transparent p-4 text-base leading-relaxed font-normal tracking-[-0.01em] text-ink transition-colors placeholder:text-gray-600 focus:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 sm:text-lg"
+          ></textarea>
+        </div>
+
+        <div class="pt-1">
+          <button
+            id="inquiry-submit-btn"
+            type="submit"
+            class="btn-primary w-full px-10 py-4 shadow-none"
+          >
+            {submitLabel}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById(
+    "contact-inquiry-form",
+  ) as HTMLFormElement | null;
+  const submitBtn = document.getElementById(
+    "inquiry-submit-btn",
+  ) as HTMLButtonElement | null;
+
+  if (form && submitBtn) {
+    const defaultLabel = submitBtn.textContent?.trim() || "Send Inquiry";
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const requiredFields = form.querySelectorAll<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >("[required]");
+
+      for (const field of requiredFields) {
+        if (!field.value.trim()) {
+          field.focus();
+          return;
+        }
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+
+      window.setTimeout(() => {
+        form.reset();
+        submitBtn.textContent = "Inquiry Sent";
+        window.setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = defaultLabel;
+        }, 2000);
+      }, 400);
+    });
+  }
+</script>
+</file>
+
+<file path="src/components/FooterSection.astro">
+---
+export interface SocialLink {
+  label: string;
+  href: string;
+  icon: "instagram" | "linkedin" | "x";
+}
+
+interface Props {
+  brandName?: string;
+  copyrightText?: string;
+  socials?: SocialLink[];
+}
+
+const {
+  brandName = "Aetherion",
+  copyrightText = "©2026 AETHERION STUDIO. All Rights Reserved",
+  socials = [
+    {
+      label: "Instagram",
+      href: "https://instagram.com",
+      icon: "instagram",
+    },
+    {
+      label: "LinkedIn",
+      href: "https://linkedin.com",
+      icon: "linkedin",
+    },
+    {
+      label: "X",
+      href: "https://x.com",
+      icon: "x",
+    },
+  ],
+} = Astro.props;
+---
+
+<footer class="bg-canvas text-ink w-full pb-12 md:pb-16">
+  <div class="section-container">
+    <div class="section-divider"></div>
+
+    <div class="mt-8 grid grid-cols-1 items-center gap-6 md:mt-10 md:grid-cols-3">
+      <div class="md:justify-self-start">
+        <a
+          href="#home"
+          class="text-brand focus-visible:outline-ink inline-block transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          {brandName}
+        </a>
+      </div>
+
+      <p class="text-meta text-gray-600 md:justify-self-center md:text-center">
+        {copyrightText}
+      </p>
+
+      <ul
+        class="flex items-center gap-3 md:justify-self-end"
+        aria-label="Social media"
+      >
+        {socials.map((social) => (
+          <li>
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              class="border-gray-600 text-ink hover:border-ink hover:bg-ink hover:text-canvas focus-visible:outline-ink flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              {social.icon === "instagram" && (
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                </svg>
+              )}
+              {social.icon === "linkedin" && (
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect width="4" height="12" x="2" y="9"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              )}
+              {social.icon === "x" && (
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                  <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                </svg>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>
+</file>
+
+<file path="src/components/HeroSection.astro">
+---
+interface Props {
+  headlineLine1?: string;
+  headlineLine2?: string;
+  copyrightText?: string;
+  description?: string;
+  mainImage?: {
+    src: string;
+    alt: string;
+  };
+  sideImage1?: {
+    src: string;
+    alt: string;
+  };
+  sideImage2?: {
+    src: string;
+    alt: string;
+  };
+}
+
+const {
+  headlineLine1 = "DESIGNING SPACES,",
+  headlineLine2 = "INSPIRING LIVES",
+  copyrightText = "©2026 AETHERION STUDIO. All Rights Reserved",
+  description = "Architects of inspirational environments, we redefine spaces, creating environments that inspire, uplift, and enhance the human experience.",
+  mainImage = {
+    src: "/images/hero-main.jpg",
+    alt: "Contemporary cantilevered timber and concrete villa in a landscaped garden",
+  },
+  sideImage1 = {
+    src: "/images/hero-tall-1.jpg",
+    alt: "Minimalist modernist residence facade with bronze vertical louvers and cantilevered glass corner",
+  },
+  sideImage2 = {
+    src: "/images/hero-tall-2.jpg",
+    alt: "Contemporary Nordic A-frame pavilion surrounded by gravel courtyard and olive trees",
+  },
+} = Astro.props;
+---
+
+<section
+  id="home"
+  class="w-full scroll-mt-24 bg-canvas pt-28 text-ink md:pt-32"
+>
+  <div class="section-container">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-8">
+        <h1 class="text-display">
+          <span class="block">{headlineLine1}</span>
+          <span class="block">{headlineLine2}</span>
+        </h1>
+      </div>
+
+      <div class="flex flex-col justify-between gap-6 lg:col-span-4 lg:h-full">
+        <p class="text-meta text-gray-600 lg:text-right">{copyrightText}</p>
+
+        <p class="text-body max-w-sm text-gray-600 lg:ml-auto lg:text-right">
+          {description}
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-12 lg:gap-5">
+      <div class="card-frame group relative sm:col-span-2 lg:col-span-7">
+        <img
+          src={mainImage.src}
+          alt={mainImage.alt}
+          class="h-90 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-115 lg:h-145"
+          loading="eager"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:col-span-2 sm:grid-cols-2 lg:col-span-5 lg:gap-5">
+        <div class="card-frame group relative">
+          <img
+            src={sideImage1.src}
+            alt={sideImage1.alt}
+            class="h-90 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-105 lg:h-145"
+            loading="eager"
+          />
+        </div>
+
+        <div class="card-frame group relative">
+          <img
+            src={sideImage2.src}
+            alt={sideImage2.alt}
+            class="h-90 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-105 lg:h-145"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</file>
+
+<file path="src/components/NavBar.astro">
+---
+export interface NavItem {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
+interface Props {
+  brandName?: string;
+  items?: NavItem[];
+}
+
+const {
+  brandName = "Aetherion",
+  items = [
+    { label: "HOME", href: "#home", active: true },
+    { label: "ABOUT", href: "#about" },
+    { label: "SERVICES", href: "#services" },
+    { label: "PROJECTS", href: "#projects" },
+    { label: "CONTACT US", href: "#contact" },
+  ],
+} = Astro.props;
+---
+
+<header class="fixed top-0 right-0 left-0 z-50 w-full py-4">
+  <div
+    aria-hidden="true"
+    class="from-canvas/90 via-canvas/55 pointer-events-none absolute inset-0 -z-10 bg-linear-to-b to-transparent backdrop-blur-md mask-[linear-gradient(to_bottom,black_0%,black_35%,transparent_100%)]"
+  ></div>
+  <div class="section-container">
+    <nav
+      class="flex w-full items-center justify-between"
+      aria-label="Main Navigation"
+    >
+      <a
+        href="/"
+        class="text-brand transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+      >
+        {brandName}
+      </a>
+
+      <ul
+        id="desktop-nav-list"
+        class="relative hidden items-center gap-1 rounded-full border border-ink/10 bg-slate p-1.5 shadow-none md:flex"
+      >
+        <li
+          id="nav-active-pill"
+          aria-hidden="true"
+          class="pointer-events-none absolute top-1.5 bottom-1.5 left-1.5 z-0 rounded-full bg-white shadow-none transition-all duration-300 ease-out"
+        ></li>
+        {items.map((item) => (
+          <li class="z-10">
+            <a
+              href={item.href}
+              data-nav-link={item.href}
+              aria-current={item.active ? "page" : undefined}
+              class:list={[
+                "relative z-10 inline-block rounded-full px-6 py-2.5 text-xs leading-none font-medium tracking-[0.06em] uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+                item.active
+                  ? "text-ink"
+                  : "text-white/90 hover:bg-white/15 hover:text-white",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        class="flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-slate text-white shadow-none transition hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:hidden"
+      >
+        <svg
+          class="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            id="menu-icon-open"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.75"
+            d="M4 7h16M4 12h16M4 17h16"
+          ></path>
+          <path
+            id="menu-icon-close"
+            class="hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.75"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </nav>
+
+    <div
+      id="mobile-menu"
+      class="mt-3 hidden w-full overflow-hidden rounded-3xl border border-white/15 bg-slate p-2 shadow-none md:hidden"
+    >
+      <ul class="flex flex-col gap-1">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              data-mobile-nav-link={item.href}
+              aria-current={item.active ? "page" : undefined}
+              class:list={[
+                "block rounded-2xl px-6 py-2.5 text-xs leading-none font-medium tracking-[0.06em] uppercase transition-colors duration-200",
+                item.active
+                  ? "bg-white text-ink"
+                  : "text-white/90 hover:bg-white/10 hover:text-white",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById("mobile-menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("menu-icon-open");
+  const closeIcon = document.getElementById("menu-icon-close");
+  const activePill = document.getElementById("nav-active-pill");
+  const desktopLinks =
+    document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]");
+  const mobileLinks = document.querySelectorAll<HTMLAnchorElement>(
+    "[data-mobile-nav-link]",
+  );
+
+  const closeMobileMenu = () => {
+    if (!toggleBtn || !mobileMenu) return;
+    toggleBtn.setAttribute("aria-expanded", "false");
+    mobileMenu.classList.add("hidden");
+    openIcon?.classList.remove("hidden");
+    closeIcon?.classList.add("hidden");
+  };
+
+  toggleBtn?.addEventListener("click", () => {
+    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+    toggleBtn.setAttribute("aria-expanded", String(!isExpanded));
+    mobileMenu?.classList.toggle("hidden");
+    openIcon?.classList.toggle("hidden");
+    closeIcon?.classList.toggle("hidden");
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Escape" &&
+      toggleBtn?.getAttribute("aria-expanded") === "true"
+    ) {
+      closeMobileMenu();
+      toggleBtn.focus();
+    }
+  });
+
+  let currentActiveHref =
+    document
+      .querySelector<HTMLAnchorElement>('[data-nav-link][aria-current="page"]')
+      ?.getAttribute("data-nav-link") ?? "#home";
+  let isProgrammaticScroll = false;
+  let scrollLockTimer: number | undefined;
+
+  const updatePillGeometry = (href: string, animate = true) => {
+    const targetLink = document.querySelector<HTMLAnchorElement>(
+      `[data-nav-link="${href}"]`,
+    );
+    const parentLi = targetLink?.parentElement;
+    if (!activePill || !targetLink || !parentLi) return;
+
+    if (!animate) {
+      activePill.style.transition = "none";
+    }
+
+    activePill.style.left = `${parentLi.offsetLeft}px`;
+    activePill.style.width = `${parentLi.offsetWidth}px`;
+
+    if (!animate) {
+      activePill.getBoundingClientRect();
+      activePill.style.transition = "";
+    }
+  };
+
+  const setActiveNav = (href: string, animate = true) => {
+    currentActiveHref = href;
+
+    desktopLinks.forEach((link) => {
+      const isActive = link.getAttribute("data-nav-link") === href;
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+        link.classList.add("text-ink");
+        link.classList.remove(
+          "text-white/90",
+          "hover:bg-white/15",
+          "hover:text-white",
+        );
+      } else {
+        link.removeAttribute("aria-current");
+        link.classList.remove("text-ink");
+        link.classList.add(
+          "text-white/90",
+          "hover:bg-white/15",
+          "hover:text-white",
+        );
+      }
+    });
+
+    mobileLinks.forEach((link) => {
+      const isActive = link.getAttribute("data-mobile-nav-link") === href;
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+        link.classList.add("bg-white", "text-ink");
+        link.classList.remove(
+          "text-white/90",
+          "hover:bg-white/10",
+          "hover:text-white",
+        );
+      } else {
+        link.removeAttribute("aria-current");
+        link.classList.remove("bg-white", "text-ink");
+        link.classList.add(
+          "text-white/90",
+          "hover:bg-white/10",
+          "hover:text-white",
+        );
+      }
+    });
+
+    updatePillGeometry(href, animate);
+  };
+
+  const getTrackedSections = () => {
+    const allSections = Array.from(
+      document.querySelectorAll<HTMLElement>("main section[id]"),
+    );
+    return allSections.filter((section) =>
+      document.querySelector(`[data-nav-link="#${section.id}"]`),
+    );
+  };
+
+  const syncNavOnScroll = () => {
+    if (isProgrammaticScroll) return;
+
+    const sections = getTrackedSections();
+    if (sections.length === 0) return;
+
+    const triggerLine = window.innerHeight * 0.4;
+    const nearBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 24;
+
+    let activeSection = sections[0];
+
+    if (nearBottom) {
+      activeSection = sections[sections.length - 1];
+    } else {
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= triggerLine) {
+          activeSection = section;
+        }
+      }
+    }
+
+    const nextHref = `#${activeSection.id}`;
+    if (nextHref !== currentActiveHref) {
+      setActiveNav(nextHref, true);
+    }
+  };
+
+  const handleNavClick = (event: MouseEvent, href: string | null) => {
+    if (!href || !href.startsWith("#")) return;
+    const targetSection = document.querySelector<HTMLElement>(href);
+
+    setActiveNav(href, true);
+    closeMobileMenu();
+
+    if (!targetSection) return;
+
+    event.preventDefault();
+    isProgrammaticScroll = true;
+    window.clearTimeout(scrollLockTimer);
+
+    targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", href);
+
+    scrollLockTimer = window.setTimeout(() => {
+      isProgrammaticScroll = false;
+      syncNavOnScroll();
+    }, 700);
+  };
+
+  desktopLinks.forEach((link) => {
+    link.addEventListener("click", (event) =>
+      handleNavClick(event, link.getAttribute("data-nav-link")),
+    );
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", (event) =>
+      handleNavClick(event, link.getAttribute("data-mobile-nav-link")),
+    );
+  });
+
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          syncNavOnScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      updatePillGeometry(currentActiveHref, false);
+    },
+    { passive: true },
+  );
+
+  setActiveNav(currentActiveHref, false);
+  syncNavOnScroll();
+  document.fonts?.ready.then(() => {
+    updatePillGeometry(currentActiveHref, false);
+  });
+</script>
+</file>
+
+<file path="src/components/ProjectsSection.astro">
+---
+export interface ProjectItem {
+  title: string;
+  architect: string;
+  location: string;
+  size: string;
+  aesthetics: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+}
+
+interface Props {
+  sectionLabel?: string;
+  headline?: string;
+  subtitle?: string;
+  projects?: ProjectItem[];
+}
+
+const {
+  sectionLabel = "Selected Work",
+  headline = "Built With Intention",
+  subtitle = "Explore a selection of projects across residential, cultural, hospitality, and retreat architecture.",
+  projects = [
+    {
+      title: "Kamo River Courtyard House",
+      architect: "Kenji Takahashi (2023 - 2025)",
+      location: "Sakyo Ward | Kyoto, Japan",
+      size: "4,800 sq ft across a two-story main residence, tea pavilion, and sunken moss courtyard",
+      aesthetics:
+        "Charred cedar rainscreen, board-formed concrete walls, and bronze-framed glass screens opening to an interior water basin",
+      image: {
+        src: "/images/project-01-kyoto.jpg",
+        alt: "Contemporary Japanese courtyard house at dusk with charred cedar cladding, glowing glass corner, and stone reflection pool",
+      },
+    },
+    {
+      title: "Bergen Fjord Glass Pavilion",
+      architect: "Astrid Lindqvist (2022 - 2024)",
+      location: "Hardangerfjord | Vestland, Norway",
+      size: "6,200 sq ft encompassing cantilevered living hall, guest wing, and boathouse terrace",
+      aesthetics:
+        "Structural glued-laminated pine beams, raw granite plinths quarried on site, and triple-glazed curtain walls framing coastal views",
+      image: {
+        src: "/images/project-02-bergen.jpg",
+        alt: "Modern Nordic timber and glass pavilion perched on coastal granite bedrock overlooking a Norwegian fjord",
+      },
+    },
+    {
+      title: "Sonoma Vineyard Sanctuary",
+      architect: "Elena Rostova (2023 - 2025)",
+      location: "Dry Creek Valley | Healdsburg, CA",
+      size: "8,400 sq ft including main rammed-earth residence, shaded loggia, and subterranean cellar",
+      aesthetics:
+        "Compacted earth walls, weathered Corten steel roof overhangs, and reclaimed white oak ceilings shading a flagstone courtyard",
+      image: {
+        src: "/images/project-03-sonoma.jpg",
+        alt: "California vineyard residence with rammed earth walls, cantilevered Corten steel roof, and stone courtyard with olive trees",
+      },
+    },
+    {
+      title: "Alpine Timber Atelier",
+      architect: "Lukas Vonlanthen (2021 - 2023)",
+      location: "Engadin Valley | Graubünden, Switzerland",
+      size: "5,150 sq ft featuring double-height design studio, library mezzanine, and private living quarters",
+      aesthetics:
+        "Untreated larch vertical siding, bush-hammered concrete core, and deep-set timber window frames engineered for alpine snow loads",
+      image: {
+        src: "/images/project-04-alpine.jpg",
+        alt: "Swiss alpine timber atelier with weathered vertical larch cladding and glowing double-height corner studio windows at twilight",
+      },
+    },
+    {
+      title: "Oaxacan Terracotta Residence",
+      architect: "Mateo Morales (2023 - 2025)",
+      location: "San Felipe del Agua | Oaxaca, Mexico",
+      size: "5,900 sq ft arranged around three open-air peristyle courtyards and a shaded botanical terrace",
+      aesthetics:
+        "Hand-pressed local clay brick, pigmented lime plaster walls, and tropical parota hardwood pergolas filtering southern sunlight",
+      image: {
+        src: "/images/project-05-oaxaca.jpg",
+        alt: "Mexican courtyard residence in warm terracotta brick and earth plaster with timber pergola shadows and agave garden",
+      },
+    },
+    {
+      title: "Aegean Limestone Cliff Villa",
+      architect: "Nikos Papadopoulos (2022 - 2024)",
+      location: "Naoussa Coast | Paros, Greece",
+      size: "7,100 sq ft spanning terraced living volumes, shaded pergola dining deck, and coastal lap pool",
+      aesthetics:
+        "Dry-stacked Cycladic stone masonry, warm lime-washed plaster volumes, and chestnut timber pergolas overlooking the sea",
+      image: {
+        src: "/images/project-06-aegean.jpg",
+        alt: "Cycladic limestone villa with dry-stacked stone walls, chestnut wood pergola, and lap pool overlooking the Aegean Sea",
+      },
+    },
+  ],
+} = Astro.props;
+
+const totalFormatted = String(projects.length).padStart(2, "0");
+---
+
+<section id="projects" aria-labelledby="projects-heading" class="section-shell">
+  <div class="section-container">
+    <div class="section-divider flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <div>
+        <span class="text-section-label block text-sm uppercase tracking-widest text-slate-500">
+          {sectionLabel}
+        </span>
+        <h2
+          id="projects-heading"
+          class="text-heading mt-3 text-3xl sm:text-4xl"
+        >
+          {headline}
+        </h2>
+      </div>
+
+      <p class="text-body max-w-md text-gray-600 md:text-right">{subtitle}</p>
+    </div>
+
+    <div
+      id="projects-viewport"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Selected architectural projects"
+      class="mt-8 w-full overflow-hidden md:mt-10"
+    >
+      <div id="projects-track" class="flex w-full will-change-transform">
+        {projects.map((project, index) => (
+          <article
+            data-project-slide
+            data-real-index={index}
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${projects.length}: ${project.title}`}
+            aria-hidden={index === 0 ? "false" : "true"}
+            class="grid min-w-full shrink-0 basis-full grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-10 lg:gap-12"
+          >
+            <div class="md:col-span-6 lg:col-span-6">
+              <div class="card-frame group relative w-full shadow-none">
+                <img
+                  src={project.image.src}
+                  alt={project.image.alt}
+                  class="aspect-square w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  loading="eager"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col justify-center md:col-span-6 lg:col-span-6">
+              <span class="text-meta text-gray-600">
+                Project {String(index + 1).padStart(2, "0")} / {totalFormatted}
+              </span>
+
+              <h3 class="text-card-title mt-2 sm:text-3xl">{project.title}</h3>
+
+              <dl class="mt-6 grid grid-cols-1 gap-6 border-t border-ink/15 pt-6 sm:grid-cols-2">
+                <div>
+                  <dt class="text-meta text-gray-600">Project Architect</dt>
+                  <dd class="text-body-strong mt-1.5">{project.architect}</dd>
+                </div>
+
+                <div>
+                  <dt class="text-meta text-gray-600">Location</dt>
+                  <dd class="text-body-strong mt-1.5">{project.location}</dd>
+                </div>
+
+                <div class="sm:col-span-2">
+                  <dt class="text-meta text-gray-600">Size</dt>
+                  <dd class="text-body mt-1.5 text-gray-600">{project.size}</dd>
+                </div>
+
+                <div class="sm:col-span-2">
+                  <dt class="text-meta text-gray-600">Aesthetics</dt>
+                  <dd class="text-body mt-1.5 text-gray-600">
+                    {project.aesthetics}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div
+      class="mt-8 flex max-w-md items-center gap-4 md:mt-10"
+      role="group"
+      aria-label="Project slide controls"
+    >
+      <button
+        id="projects-prev"
+        type="button"
+        aria-label="Previous project"
+        aria-controls="projects-track"
+        class="btn-icon-circle"
+      >
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M15 18L9 12L15 6"></path>
+        </svg>
+      </button>
+
+      <span
+        id="projects-current-num"
+        aria-live="polite"
+        class="text-meta text-ink w-6 text-center font-semibold tabular-nums"
+      >
+        01
+      </span>
+
+      <div class="bg-ink/15 relative h-0.5 flex-1 overflow-hidden rounded-full">
+        <div
+          id="projects-progress-bar"
+          class="bg-ink h-full transition-all duration-300 ease-out"
+          style={`width: ${(1 / projects.length) * 100}%`}
+        ></div>
+      </div>
+
+      <span class="text-meta w-6 text-center text-gray-600 tabular-nums">
+        {totalFormatted}
+      </span>
+
+      <button
+        id="projects-next"
+        type="button"
+        aria-label="Next project"
+        aria-controls="projects-track"
+        class="btn-icon-circle"
+      >
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M9 18L15 12L9 6"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initProjectsSlider = () => {
+    const track = document.getElementById("projects-track");
+    const prevBtn = document.getElementById("projects-prev");
+    const nextBtn = document.getElementById("projects-next");
+    const currentNumEl = document.getElementById("projects-current-num");
+    const progressBarEl = document.getElementById("projects-progress-bar");
+
+    if (!track || track.dataset.initialized === "true") return;
+
+    const originalSlides = Array.from(
+      track.querySelectorAll<HTMLElement>("[data-project-slide]"),
+    );
+    const total = originalSlides.length;
+    if (total === 0) return;
+
+    track.dataset.initialized = "true";
+
+    const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
+    const lastClone = originalSlides[total - 1].cloneNode(true) as HTMLElement;
+
+    firstClone.dataset.clone = "first";
+    firstClone.setAttribute("aria-hidden", "true");
+    firstClone.inert = true;
+
+    lastClone.dataset.clone = "last";
+    lastClone.setAttribute("aria-hidden", "true");
+    lastClone.inert = true;
+
+    track.prepend(lastClone);
+    track.append(firstClone);
+
+    const TRANSITION_CSS = "transform 550ms cubic-bezier(0.22, 1, 0.36, 1)";
+    let currentIndex = 1;
+    let isTransitioning = false;
+
+    const getRealIndex = (trackIdx: number) =>
+      (((trackIdx - 1) % total) + total) % total;
+
+    const updateProgressUI = (realIndex: number) => {
+      if (currentNumEl) {
+        currentNumEl.textContent = String(realIndex + 1).padStart(2, "0");
+      }
+      if (progressBarEl) {
+        progressBarEl.style.width = `${((realIndex + 1) / total) * 100}%`;
+      }
+      originalSlides.forEach((slide, idx) => {
+        slide.setAttribute("aria-hidden", idx === realIndex ? "false" : "true");
+      });
+    };
+
+    track.style.transition = "none";
+    track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+    void track.offsetWidth;
+    track.style.transition = TRANSITION_CSS;
+
+    const moveToIndex = (nextIndex: number) => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentIndex = nextIndex;
+      track.style.transition = TRANSITION_CSS;
+      track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+      updateProgressUI(getRealIndex(currentIndex));
+    };
+
+    track.addEventListener("transitionend", (event) => {
+      if (event.target !== track || event.propertyName !== "transform") return;
+
+      if (currentIndex === total + 1) {
+        track.style.transition = "none";
+        currentIndex = 1;
+        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+        void track.offsetWidth;
+        track.style.transition = TRANSITION_CSS;
+      } else if (currentIndex === 0) {
+        track.style.transition = "none";
+        currentIndex = total;
+        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+        void track.offsetWidth;
+        track.style.transition = TRANSITION_CSS;
+      }
+
+      isTransitioning = false;
+    });
+
+    prevBtn?.addEventListener("click", () => {
+      moveToIndex(currentIndex - 1);
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      moveToIndex(currentIndex + 1);
+    });
+  };
+
+  initProjectsSlider();
+</script>
+</file>
+
+<file path="src/components/ServicesSection.astro">
+---
+export interface ServiceItem {
+  title: string;
+  description: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+}
+
+interface Props {
+  sectionLabel?: string;
+  headline?: string;
+  services?: ServiceItem[];
+}
+
+const {
+  sectionLabel = "Our Expertise",
+  headline = "Where dreams take shape and every design tells a unique story.",
+  services = [
+    {
+      title: "Interior Design",
+      description:
+        "Composing calm living spaces with custom oak joinery, honed stone, and warm daylight.",
+      image: {
+        src: "/images/service-interior-design.jpg",
+        alt: "Warm minimalist living room featuring floor-to-ceiling steel windows, natural oak cabinetry, linen seating, and a travertine fireplace",
+      },
+    },
+    {
+      title: "Architecture Design",
+      description:
+        "Shaping residential structures that balance natural light, raw timber, and enduring form.",
+      image: {
+        src: "/images/service-architecture-design.jpg",
+        alt: "Contemporary timber and white-washed wood residence with a stone paver courtyard and wooden deck steps surrounded by autumn trees",
+      },
+    },
+    {
+      title: "Spatial Planning",
+      description:
+        "Organizing sightlines, room proportions, and courtyard thresholds for natural daily flow.",
+      image: {
+        src: "/images/service-spatial-planning.jpg",
+        alt: "Sunlit limestone gallery hallway opening into a timber-beamed living pavilion and landscaped courtyard",
+      },
+    },
+  ],
+} = Astro.props;
+---
+
+<section id="services" aria-labelledby="services-heading" class="section-shell">
+  <div class="section-container">
+    <div class="section-divider flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <span class="text-section-label block text-sm uppercase tracking-widest text-slate-500">
+          {sectionLabel}
+        </span>
+        <h2
+          id="services-heading"
+          class="text-heading mt-3 max-w-2xl text-3xl sm:text-4xl"
+        >
+          {headline}
+        </h2>
+      </div>
+
+      <div
+        class="flex items-center gap-3.5 self-start sm:self-end"
+        role="group"
+        aria-label="Slide controls"
+      >
+        <button
+          id="services-prev"
+          type="button"
+          aria-label="Previous service"
+          aria-controls="services-track"
+          class="btn-icon-circle"
+        >
+          <svg
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 18L9 12L15 6"></path>
+          </svg>
+        </button>
+
+        <button
+          id="services-next"
+          type="button"
+          aria-label="Next service"
+          aria-controls="services-track"
+          class="btn-icon-circle"
+        >
+          <svg
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 18L15 12L9 6"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="services-viewport"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Architectural services"
+      class="mt-8 w-full overflow-hidden md:mt-10"
+    >
+      <div id="services-track" class="flex w-full will-change-transform">
+        {services.map((service, index) => (
+          <article
+            data-service-slide
+            data-real-index={index}
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${services.length}: ${service.title}`}
+            aria-hidden={index === 0 ? "false" : "true"}
+            class="grid min-w-full shrink-0 basis-full grid-cols-1 gap-6 md:grid-cols-12 md:items-end md:gap-8"
+          >
+            <div class="card-frame shadow-none md:col-span-8">
+              <img
+                src={service.image.src}
+                alt={service.image.alt}
+                class="aspect-16/10 w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.02]"
+                loading="eager"
+              />
+            </div>
+
+            <div class="flex flex-col justify-end md:col-span-4">
+              <span class="text-meta text-gray-600">
+                0{index + 1} / 0{services.length}
+              </span>
+              <h3 class="text-card-title mt-2">{service.title}</h3>
+              <p class="text-body mt-2.5 max-w-[34ch] text-gray-600">
+                {service.description}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initServicesSlider = () => {
+    const track = document.getElementById("services-track");
+    const prevBtn = document.getElementById("services-prev");
+    const nextBtn = document.getElementById("services-next");
+
+    if (!track || track.dataset.initialized === "true") return;
+
+    const originalSlides = Array.from(
+      track.querySelectorAll<HTMLElement>("[data-service-slide]"),
+    );
+    const total = originalSlides.length;
+    if (total === 0) return;
+
+    track.dataset.initialized = "true";
+
+    const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
+    const lastClone = originalSlides[total - 1].cloneNode(true) as HTMLElement;
+
+    firstClone.dataset.clone = "first";
+    firstClone.setAttribute("aria-hidden", "true");
+    firstClone.inert = true;
+
+    lastClone.dataset.clone = "last";
+    lastClone.setAttribute("aria-hidden", "true");
+    lastClone.inert = true;
+
+    track.prepend(lastClone);
+    track.append(firstClone);
+
+    const TRANSITION_CSS = "transform 550ms cubic-bezier(0.22, 1, 0.36, 1)";
+    let currentIndex = 1;
+    let isTransitioning = false;
+
+    const getRealIndex = (trackIdx: number) =>
+      (((trackIdx - 1) % total) + total) % total;
+
+    const syncAria = (realIndex: number) => {
+      originalSlides.forEach((slide, idx) => {
+        slide.setAttribute("aria-hidden", idx === realIndex ? "false" : "true");
+      });
+    };
+
+    track.style.transition = "none";
+    track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+    void track.offsetWidth;
+    track.style.transition = TRANSITION_CSS;
+
+    const moveToIndex = (nextIndex: number) => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentIndex = nextIndex;
+      track.style.transition = TRANSITION_CSS;
+      track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+      syncAria(getRealIndex(currentIndex));
+    };
+
+    track.addEventListener("transitionend", (event) => {
+      if (event.target !== track || event.propertyName !== "transform") return;
+
+      if (currentIndex === total + 1) {
+        track.style.transition = "none";
+        currentIndex = 1;
+        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+        void track.offsetWidth;
+        track.style.transition = TRANSITION_CSS;
+      } else if (currentIndex === 0) {
+        track.style.transition = "none";
+        currentIndex = total;
+        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+        void track.offsetWidth;
+        track.style.transition = TRANSITION_CSS;
+      }
+
+      isTransitioning = false;
+    });
+
+    prevBtn?.addEventListener("click", () => {
+      moveToIndex(currentIndex - 1);
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      moveToIndex(currentIndex + 1);
+    });
+  };
+
+  initServicesSlider();
+</script>
+</file>
+
+<file path="src/layouts/Layout.astro">
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Aetherion: Architecture & Spatial Design" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
+  </head>
+  <body class="bg-canvas text-ink antialiased selection:bg-slate selection:text-white">
+    <slot />
+  </body>
+</html>
+</file>
+
+<file path="src/pages/index.astro">
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import HeroSection from "../components/HeroSection.astro";
+import AboutSection from "../components/AboutSection.astro";
+import ServicesSection from "../components/ServicesSection.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
+import ContactSection from "../components/ContactSection.astro";
+import FooterSection from "../components/FooterSection.astro";
+---
+
+<Layout title="Aetherion: Designing Spaces, Inspiring Lives">
+  <NavBar />
+  <main class="flex flex-col gap-y-24 pb-24">
+    <HeroSection />
+    <AboutSection />
+    <ServicesSection />
+    <ProjectsSection />
+    <ContactSection />
+  </main>
+  <FooterSection />
+</Layout>
+</file>
+
+<file path="src/styles/global.css">
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --color-canvas: #FAF9F5;
+  --color-surface: #EBE9E2;
+  --color-ink: #1E232A;
+  --color-slate: #2C333D;
+  --color-muted: #4B5563;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply w-full scroll-mt-24 bg-canvas text-ink;
+  }
+
+  .section-container {
+    @apply mx-auto w-full max-w-360 px-6 md:px-12;
+  }
+
+  .section-divider {
+    @apply border-b border-ink/15 pb-4;
+  }
+
+  .text-display {
+    @apply text-4xl leading-[1.06] font-semibold tracking-[-0.03em] text-ink uppercase sm:text-5xl md:text-6xl lg:text-[4.25rem];
+  }
+
+  .text-brand {
+    @apply text-xl leading-[1.2] font-semibold tracking-[-0.02em] text-ink sm:text-2xl;
+  }
+
+  .text-section-label {
+    @apply text-sm leading-[1.4] font-medium tracking-widest text-slate-500 uppercase;
+  }
+
+  .text-heading {
+    @apply text-3xl leading-[1.2] font-medium tracking-tight text-ink sm:text-4xl;
+  }
+
+  .text-card-title {
+    @apply text-xl leading-tight font-medium tracking-[-0.02em] text-ink sm:text-2xl;
+  }
+
+  .text-body {
+    @apply text-sm leading-[1.65] font-normal tracking-[-0.01em] text-gray-600 sm:text-[15px];
+  }
+
+  .text-body-strong {
+    @apply text-sm leading-normal font-medium tracking-[-0.01em] text-ink sm:text-[15px];
+  }
+
+  .text-meta {
+    @apply text-xs leading-[1.4] font-medium tracking-[0.02em] text-gray-600;
+  }
+
+  .text-ui-label {
+    @apply text-xs leading-[1.4] font-semibold tracking-[0.06em] text-gray-600 uppercase;
+  }
+
+  .card-frame {
+    @apply overflow-hidden rounded-3xl border border-ink/8 bg-surface shadow-none;
+  }
+
+  .btn-primary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-ink/10 bg-slate px-10 py-4 text-xs leading-none font-medium tracking-[0.06em] text-white uppercase shadow-none transition-colors duration-200 hover:bg-ink active:scale-98 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-icon-circle {
+    @apply flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-ink bg-transparent text-ink shadow-none transition-colors duration-200 hover:bg-ink hover:text-canvas active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink;
+  }
+
+  .form-input {
+    @apply w-full scroll-mt-28 border-b border-gray-600 bg-transparent pt-1 pb-3.5 text-base leading-normal font-normal tracking-[-0.01em] text-ink transition-colors placeholder:text-gray-600 focus:border-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:text-lg;
+  }
+}
+</file>
+
+<file path=".gitignore">
+# Dependencies
+node_modules/
+
+# Agent skills & config
+.agent/
+.agents/
+skills/
+AGENTS.md
+
+# Astro build output & generated types
+dist/
+.astro/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+</file>
+
+<file path="astro.config.mjs">
+// @ts-check
+import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  vite: {
+    plugins: [tailwindcss()],
+  },
+});
+</file>
+
+<file path="package.json">
+{
+  "name": "aetherion-architecture-landing-page",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^7.4.2",
+    "tailwindcss": "^4.1.0"
+  }
+}
+</file>
+
+<file path="tsconfig.json">
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}
+</file>
+
+</files>

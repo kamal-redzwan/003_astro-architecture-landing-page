@@ -1,0 +1,68 @@
+[
+  {
+    "title": "Kamo River Courtyard House",
+    "architect": "Kenji Takahashi (2023 - 2025)",
+    "location": "Sakyo Ward | Kyoto, Japan",
+    "size": "4,800 sq ft across a two-story main residence, tea pavilion, and sunken moss courtyard",
+    "aesthetics": "Charred cedar rainscreen, board-formed concrete walls, and bronze-framed glass screens opening to an interior water basin",
+    "image": {
+      "src": "/images/project-01-kyoto.jpg",
+      "alt": "Contemporary Japanese courtyard house at dusk with charred cedar cladding, glowing glass corner, and stone reflection pool"
+    }
+  },
+  {
+    "title": "Bergen Fjord Glass Pavilion",
+    "architect": "Astrid Lindqvist (2022 - 2024)",
+    "location": "Hardangerfjord | Vestland, Norway",
+    "size": "6,200 sq ft encompassing cantilevered living hall, guest wing, and boathouse terrace",
+    "aesthetics": "Structural glued-laminated pine beams, raw granite plinths quarried on site, and triple-glazed curtain walls framing coastal views",
+    "image": {
+      "src": "/images/project-02-bergen.jpg",
+      "alt": "Modern Nordic timber and glass pavilion perched on coastal granite bedrock overlooking a Norwegian fjord"
+    }
+  },
+  {
+    "title": "Sonoma Vineyard Sanctuary",
+    "architect": "Elena Rostova (2023 - 2025)",
+    "location": "Dry Creek Valley | Healdsburg, CA",
+    "size": "8,400 sq ft including main rammed-earth residence, shaded loggia, and subterranean cellar",
+    "aesthetics": "Compacted earth walls, weathered Corten steel roof overhangs, and reclaimed white oak ceilings shading a flagstone courtyard",
+    "image": {
+      "src": "/images/project-03-sonoma.jpg",
+      "alt": "California vineyard residence with rammed earth walls, cantilevered Corten steel roof, and stone courtyard with olive trees"
+    }
+  },
+  {
+    "title": "Alpine Timber Atelier",
+    "architect": "Lukas Vonlanthen (2021 - 2023)",
+    "location": "Engadin Valley | Graubünden, Switzerland",
+    "size": "5,150 sq ft featuring double-height design studio, library mezzanine, and private living quarters",
+    "aesthetics": "Untreated larch vertical siding, bush-hammered concrete core, and deep-set timber window frames engineered for alpine snow loads",
+    "image": {
+      "src": "/images/project-04-alpine.jpg",
+      "alt": "Swiss alpine timber atelier with weathered vertical larch cladding and glowing double-height corner studio windows at twilight"
+    }
+  },
+  {
+    "title": "Oaxacan Terracotta Residence",
+    "architect": "Mateo Morales (2023 - 2025)",
+    "location": "San Felipe del Agua | Oaxaca, Mexico",
+    "size": "5,900 sq ft arranged around three open-air peristyle courtyards and a shaded botanical terrace",
+    "aesthetics": "Hand-pressed local clay brick, pigmented lime plaster walls, and tropical parota hardwood pergolas filtering southern sunlight",
+    "image": {
+      "src": "/images/project-05-oaxaca.jpg",
+      "alt": "Mexican courtyard residence in warm terracotta brick and earth plaster with timber pergola shadows and agave garden"
+    }
+  },
+  {
+    "title": "Aegean Limestone Cliff Villa",
+    "architect": "Nikos Papadopoulos (2022 - 2024)",
+    "location": "Naoussa Coast | Paros, Greece",
+    "size": "7,100 sq ft spanning terraced living volumes, shaded pergola dining deck, and coastal lap pool",
+    "aesthetics": "Dry-stacked Cycladic stone masonry, warm lime-washed plaster volumes, and chestnut timber pergolas overlooking the sea",
+    "image": {
+      "src": "/images/project-06-aegean.jpg",
+      "alt": "Cycladic limestone villa with dry-stacked stone walls, chestnut wood pergola, and lap pool overlooking the Aegean Sea"
+    }
+  }
+]
