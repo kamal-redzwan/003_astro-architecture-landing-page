@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Agent skills & config
+.agent/
+.agents/
+skills/
+AGENTS.md
+
+# Astro build output & generated types
+dist/
+.astro/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store

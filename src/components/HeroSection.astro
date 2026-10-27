@@ -1,0 +1,94 @@
+---
+interface Props {
+  headlineLine1?: string;
+  headlineLine2?: string;
+  copyrightText?: string;
+  description?: string;
+  mainImage?: {
+    src: string;
+    alt: string;
+  };
+  sideImage1?: {
+    src: string;
+    alt: string;
+  };
+  sideImage2?: {
+    src: string;
+    alt: string;
+  };
+}
+
+const {
+  headlineLine1 = "DESIGNING SPACES,",
+  headlineLine2 = "INSPIRING LIVES",
+  copyrightText = "©2026 AETHERION STUDIO. All Rights Reserved",
+  description = "Architects of inspirational environments, we redefine spaces, creating environments that inspire, uplift, and enhance the human experience.",
+  mainImage = {
+    src: "/images/hero-main.jpg",
+    alt: "Contemporary cantilevered timber and concrete villa in a landscaped garden",
+  },
+  sideImage1 = {
+    src: "/images/hero-tall-1.jpg",
+    alt: "Minimalist modernist residence facade with bronze vertical louvers and cantilevered glass corner",
+  },
+  sideImage2 = {
+    src: "/images/hero-tall-2.jpg",
+    alt: "Contemporary Nordic A-frame pavilion surrounded by gravel courtyard and olive trees",
+  },
+} = Astro.props;
+---
+
+<section
+  id="home"
+  class="w-full scroll-mt-24 bg-canvas pt-28 text-ink md:pt-32"
+>
+  <div class="section-container">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-8">
+        <h1 class="text-display">
+          <span class="block">{headlineLine1}</span>
+          <span class="block">{headlineLine2}</span>
+        </h1>
+      </div>
+
+      <div class="flex flex-col justify-between gap-6 lg:col-span-4 lg:h-full">
+        <p class="text-meta text-gray-600 lg:text-right">{copyrightText}</p>
+
+        <p class="text-body max-w-sm text-gray-600 lg:ml-auto lg:text-right">
+          {description}
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-12 lg:gap-5">
+      <div class="card-frame group relative sm:col-span-2 lg:col-span-7">
+        <img
+          src={mainImage.src}
+          alt={mainImage.alt}
+          class="h-90 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-115 lg:h-145"
+          loading="eager"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:col-span-2 sm:grid-cols-2 lg:col-span-5 lg:gap-5">
+        <div class="card-frame group relative">
+          <img
+            src={sideImage1.src}
+            alt={sideImage1.alt}
+            class="h-90 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-105 lg:h-145"
+            loading="eager"
+          />
+        </div>
+
+        <div class="card-frame group relative">
+          <img
+            src={sideImage2.src}
+            alt={sideImage2.alt}
+            class="h-90 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-105 lg:h-145"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

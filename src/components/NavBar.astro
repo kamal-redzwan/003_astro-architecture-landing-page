@@ -1,0 +1,343 @@
+---
+export interface NavItem {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
+interface Props {
+  brandName?: string;
+  items?: NavItem[];
+}
+
+const {
+  brandName = "Aetherion",
+  items = [
+    { label: "HOME", href: "#home", active: true },
+    { label: "ABOUT", href: "#about" },
+    { label: "SERVICES", href: "#services" },
+    { label: "PROJECTS", href: "#projects" },
+    { label: "CONTACT US", href: "#contact" },
+  ],
+} = Astro.props;
+---
+
+<header class="fixed top-0 right-0 left-0 z-50 w-full py-4">
+  <div
+    aria-hidden="true"
+    class="from-canvas/90 via-canvas/55 pointer-events-none absolute inset-0 -z-10 bg-linear-to-b to-transparent backdrop-blur-md mask-[linear-gradient(to_bottom,black_0%,black_35%,transparent_100%)]"
+  ></div>
+  <div class="section-container">
+    <nav
+      class="flex w-full items-center justify-between"
+      aria-label="Main Navigation"
+    >
+      <a
+        href="/"
+        class="text-brand transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+      >
+        {brandName}
+      </a>
+
+      <ul
+        id="desktop-nav-list"
+        class="relative hidden items-center gap-1 rounded-full border border-ink/10 bg-slate p-1.5 shadow-none md:flex"
+      >
+        <li
+          id="nav-active-pill"
+          aria-hidden="true"
+          class="pointer-events-none absolute top-1.5 bottom-1.5 left-1.5 z-0 rounded-full bg-white shadow-none transition-all duration-300 ease-out"
+        ></li>
+        {items.map((item) => (
+          <li class="z-10">
+            <a
+              href={item.href}
+              data-nav-link={item.href}
+              aria-current={item.active ? "page" : undefined}
+              class:list={[
+                "relative z-10 inline-block rounded-full px-6 py-2.5 text-xs leading-none font-medium tracking-[0.06em] uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+                item.active
+                  ? "text-ink"
+                  : "text-white/90 hover:bg-white/15 hover:text-white",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        class="flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-slate text-white shadow-none transition hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:hidden"
+      >
+        <svg
+          class="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            id="menu-icon-open"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.75"
+            d="M4 7h16M4 12h16M4 17h16"
+          ></path>
+          <path
+            id="menu-icon-close"
+            class="hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.75"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </nav>
+
+    <div
+      id="mobile-menu"
+      class="mt-3 hidden w-full overflow-hidden rounded-3xl border border-white/15 bg-slate p-2 shadow-none md:hidden"
+    >
+      <ul class="flex flex-col gap-1">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              data-mobile-nav-link={item.href}
+              aria-current={item.active ? "page" : undefined}
+              class:list={[
+                "block rounded-2xl px-6 py-2.5 text-xs leading-none font-medium tracking-[0.06em] uppercase transition-colors duration-200",
+                item.active
+                  ? "bg-white text-ink"
+                  : "text-white/90 hover:bg-white/10 hover:text-white",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById("mobile-menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("menu-icon-open");
+  const closeIcon = document.getElementById("menu-icon-close");
+  const activePill = document.getElementById("nav-active-pill");
+  const desktopLinks =
+    document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]");
+  const mobileLinks = document.querySelectorAll<HTMLAnchorElement>(
+    "[data-mobile-nav-link]",
+  );
+
+  const closeMobileMenu = () => {
+    if (!toggleBtn || !mobileMenu) return;
+    toggleBtn.setAttribute("aria-expanded", "false");
+    mobileMenu.classList.add("hidden");
+    openIcon?.classList.remove("hidden");
+    closeIcon?.classList.add("hidden");
+  };
+
+  toggleBtn?.addEventListener("click", () => {
+    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+    toggleBtn.setAttribute("aria-expanded", String(!isExpanded));
+    mobileMenu?.classList.toggle("hidden");
+    openIcon?.classList.toggle("hidden");
+    closeIcon?.classList.toggle("hidden");
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Escape" &&
+      toggleBtn?.getAttribute("aria-expanded") === "true"
+    ) {
+      closeMobileMenu();
+      toggleBtn.focus();
+    }
+  });
+
+  let currentActiveHref =
+    document
+      .querySelector<HTMLAnchorElement>('[data-nav-link][aria-current="page"]')
+      ?.getAttribute("data-nav-link") ?? "#home";
+  let isProgrammaticScroll = false;
+  let scrollLockTimer: number | undefined;
+
+  const updatePillGeometry = (href: string, animate = true) => {
+    const targetLink = document.querySelector<HTMLAnchorElement>(
+      `[data-nav-link="${href}"]`,
+    );
+    const parentLi = targetLink?.parentElement;
+    if (!activePill || !targetLink || !parentLi) return;
+
+    if (!animate) {
+      activePill.style.transition = "none";
+    }
+
+    activePill.style.left = `${parentLi.offsetLeft}px`;
+    activePill.style.width = `${parentLi.offsetWidth}px`;
+
+    if (!animate) {
+      activePill.getBoundingClientRect();
+      activePill.style.transition = "";
+    }
+  };
+
+  const setActiveNav = (href: string, animate = true) => {
+    currentActiveHref = href;
+
+    desktopLinks.forEach((link) => {
+      const isActive = link.getAttribute("data-nav-link") === href;
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+        link.classList.add("text-ink");
+        link.classList.remove(
+          "text-white/90",
+          "hover:bg-white/15",
+          "hover:text-white",
+        );
+      } else {
+        link.removeAttribute("aria-current");
+        link.classList.remove("text-ink");
+        link.classList.add(
+          "text-white/90",
+          "hover:bg-white/15",
+          "hover:text-white",
+        );
+      }
+    });
+
+    mobileLinks.forEach((link) => {
+      const isActive = link.getAttribute("data-mobile-nav-link") === href;
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+        link.classList.add("bg-white", "text-ink");
+        link.classList.remove(
+          "text-white/90",
+          "hover:bg-white/10",
+          "hover:text-white",
+        );
+      } else {
+        link.removeAttribute("aria-current");
+        link.classList.remove("bg-white", "text-ink");
+        link.classList.add(
+          "text-white/90",
+          "hover:bg-white/10",
+          "hover:text-white",
+        );
+      }
+    });
+
+    updatePillGeometry(href, animate);
+  };
+
+  const getTrackedSections = () => {
+    const allSections = Array.from(
+      document.querySelectorAll<HTMLElement>("main section[id]"),
+    );
+    return allSections.filter((section) =>
+      document.querySelector(`[data-nav-link="#${section.id}"]`),
+    );
+  };
+
+  const syncNavOnScroll = () => {
+    if (isProgrammaticScroll) return;
+
+    const sections = getTrackedSections();
+    if (sections.length === 0) return;
+
+    const triggerLine = window.innerHeight * 0.4;
+    const nearBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 24;
+
+    let activeSection = sections[0];
+
+    if (nearBottom) {
+      activeSection = sections[sections.length - 1];
+    } else {
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= triggerLine) {
+          activeSection = section;
+        }
+      }
+    }
+
+    const nextHref = `#${activeSection.id}`;
+    if (nextHref !== currentActiveHref) {
+      setActiveNav(nextHref, true);
+    }
+  };
+
+  const handleNavClick = (event: MouseEvent, href: string | null) => {
+    if (!href || !href.startsWith("#")) return;
+    const targetSection = document.querySelector<HTMLElement>(href);
+
+    setActiveNav(href, true);
+    closeMobileMenu();
+
+    if (!targetSection) return;
+
+    event.preventDefault();
+    isProgrammaticScroll = true;
+    window.clearTimeout(scrollLockTimer);
+
+    targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", href);
+
+    scrollLockTimer = window.setTimeout(() => {
+      isProgrammaticScroll = false;
+      syncNavOnScroll();
+    }, 700);
+  };
+
+  desktopLinks.forEach((link) => {
+    link.addEventListener("click", (event) =>
+      handleNavClick(event, link.getAttribute("data-nav-link")),
+    );
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", (event) =>
+      handleNavClick(event, link.getAttribute("data-mobile-nav-link")),
+    );
+  });
+
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          syncNavOnScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      updatePillGeometry(currentActiveHref, false);
+    },
+    { passive: true },
+  );
+
+  setActiveNav(currentActiveHref, false);
+  syncNavOnScroll();
+  document.fonts?.ready.then(() => {
+    updatePillGeometry(currentActiveHref, false);
+  });
+</script>

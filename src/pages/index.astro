@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import HeroSection from "../components/HeroSection.astro";
+import AboutSection from "../components/AboutSection.astro";
+import ServicesSection from "../components/ServicesSection.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
+import ContactSection from "../components/ContactSection.astro";
+import FooterSection from "../components/FooterSection.astro";
+---
+
+<Layout title="Aetherion: Designing Spaces, Inspiring Lives">
+  <NavBar />
+  <main class="flex flex-col gap-y-24 pb-24">
+    <HeroSection />
+    <AboutSection />
+    <ServicesSection />
+    <ProjectsSection />
+    <ContactSection />
+  </main>
+  <FooterSection />
+</Layout>

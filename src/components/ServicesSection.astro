@@ -1,0 +1,245 @@
+---
+export interface ServiceItem {
+  title: string;
+  description: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+}
+
+interface Props {
+  sectionLabel?: string;
+  headline?: string;
+  services?: ServiceItem[];
+}
+
+const {
+  sectionLabel = "Our Expertise",
+  headline = "Where dreams take shape and every design tells a unique story.",
+  services = [
+    {
+      title: "Interior Design",
+      description:
+        "Composing calm living spaces with custom oak joinery, honed stone, and warm daylight.",
+      image: {
+        src: "/images/service-interior-design.jpg",
+        alt: "Warm minimalist living room featuring floor-to-ceiling steel windows, natural oak cabinetry, linen seating, and a travertine fireplace",
+      },
+    },
+    {
+      title: "Architecture Design",
+      description:
+        "Shaping residential structures that balance natural light, raw timber, and enduring form.",
+      image: {
+        src: "/images/service-architecture-design.jpg",
+        alt: "Contemporary timber and white-washed wood residence with a stone paver courtyard and wooden deck steps surrounded by autumn trees",
+      },
+    },
+    {
+      title: "Spatial Planning",
+      description:
+        "Organizing sightlines, room proportions, and courtyard thresholds for natural daily flow.",
+      image: {
+        src: "/images/service-spatial-planning.jpg",
+        alt: "Sunlit limestone gallery hallway opening into a timber-beamed living pavilion and landscaped courtyard",
+      },
+    },
+  ],
+} = Astro.props;
+---
+
+<section id="services" aria-labelledby="services-heading" class="section-shell">
+  <div class="section-container">
+    <div class="section-divider flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <span class="text-section-label block text-sm uppercase tracking-widest text-slate-500">
+          {sectionLabel}
+        </span>
+        <h2
+          id="services-heading"
+          class="text-heading mt-3 max-w-2xl text-3xl sm:text-4xl"
+        >
+          {headline}
+        </h2>
+      </div>
+
+      <div
+        class="flex items-center gap-3.5 self-start sm:self-end"
+        role="group"
+        aria-label="Slide controls"
+      >
+        <button
+          id="services-prev"
+          type="button"
+          aria-label="Previous service"
+          aria-controls="services-track"
+          class="btn-icon-circle"
+        >
+          <svg
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 18L9 12L15 6"></path>
+          </svg>
+        </button>
+
+        <button
+          id="services-next"
+          type="button"
+          aria-label="Next service"
+          aria-controls="services-track"
+          class="btn-icon-circle"
+        >
+          <svg
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 18L15 12L9 6"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="services-viewport"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Architectural services"
+      class="mt-8 w-full overflow-hidden md:mt-10"
+    >
+      <div id="services-track" class="flex w-full will-change-transform">
+        {services.map((service, index) => (
+          <article
+            data-service-slide
+            data-real-index={index}
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${services.length}: ${service.title}`}
+            aria-hidden={index === 0 ? "false" : "true"}
+            class="grid min-w-full shrink-0 basis-full grid-cols-1 gap-6 md:grid-cols-12 md:items-end md:gap-8"
+          >
+            <div class="card-frame shadow-none md:col-span-8">
+              <img
+                src={service.image.src}
+                alt={service.image.alt}
+                class="aspect-16/10 w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.02]"
+                loading="eager"
+              />
+            </div>
+
+            <div class="flex flex-col justify-end md:col-span-4">
+              <span class="text-meta text-gray-600">
+                0{index + 1} / 0{services.length}
+              </span>
+              <h3 class="text-card-title mt-2">{service.title}</h3>
+              <p class="text-body mt-2.5 max-w-[34ch] text-gray-600">
+                {service.description}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initServicesSlider = () => {
+    const track = document.getElementById("services-track");
+    const prevBtn = document.getElementById("services-prev");
+    const nextBtn = document.getElementById("services-next");
+
+    if (!track || track.dataset.initialized === "true") return;
+
+    const originalSlides = Array.from(
+      track.querySelectorAll<HTMLElement>("[data-service-slide]"),
+    );
+    const total = originalSlides.length;
+    if (total === 0) return;
+
+    track.dataset.initialized = "true";
+
+    const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
+    const lastClone = originalSlides[total - 1].cloneNode(true) as HTMLElement;
+
+    firstClone.dataset.clone = "first";
+    firstClone.setAttribute("aria-hidden", "true");
+    firstClone.inert = true;
+
+    lastClone.dataset.clone = "last";
+    lastClone.setAttribute("aria-hidden", "true");
+    lastClone.inert = true;
+
+    track.prepend(lastClone);
+    track.append(firstClone);
+
+    const TRANSITION_CSS = "transform 550ms cubic-bezier(0.22, 1, 0.36, 1)";
+    let currentIndex = 1;
+    let isTransitioning = false;
+
+    const getRealIndex = (trackIdx: number) =>
+      (((trackIdx - 1) % total) + total) % total;
+
+    const syncAria = (realIndex: number) => {
+      originalSlides.forEach((slide, idx) => {
+        slide.setAttribute("aria-hidden", idx === realIndex ? "false" : "true");
+      });
+    };
+
+    track.style.transition = "none";
+    track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+    void track.offsetWidth;
+    track.style.transition = TRANSITION_CSS;
+
+    const moveToIndex = (nextIndex: number) => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentIndex = nextIndex;
+      track.style.transition = TRANSITION_CSS;
+      track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+      syncAria(getRealIndex(currentIndex));
+    };
+
+    track.addEventListener("transitionend", (event) => {
+      if (event.target !== track || event.propertyName !== "transform") return;
+
+      if (currentIndex === total + 1) {
+        track.style.transition = "none";
+        currentIndex = 1;
+        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+        void track.offsetWidth;
+        track.style.transition = TRANSITION_CSS;
+      } else if (currentIndex === 0) {
+        track.style.transition = "none";
+        currentIndex = total;
+        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+        void track.offsetWidth;
+        track.style.transition = TRANSITION_CSS;
+      }
+
+      isTransitioning = false;
+    });
+
+    prevBtn?.addEventListener("click", () => {
+      moveToIndex(currentIndex - 1);
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      moveToIndex(currentIndex + 1);
+    });
+  };
+
+  initServicesSlider();
+</script>
