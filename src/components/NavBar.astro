@@ -10,16 +10,23 @@ interface Props {
   items?: NavItem[];
 }
 
+const isHomePage = Astro.url.pathname === "/";
+
 const {
   brandName = "Aetherion",
   items = [
-    { label: "HOME", href: "#home", active: true },
+    { label: "HOME", href: "#home", active: isHomePage },
     { label: "ABOUT", href: "#about" },
     { label: "SERVICES", href: "#services" },
     { label: "PROJECTS", href: "#projects" },
     { label: "CONTACT US", href: "#contact" },
   ],
 } = Astro.props;
+
+const resolvedItems = items.map((item) => ({
+  ...item,
+  href: !isHomePage && item.href.startsWith("#") ? `/${item.href}` : item.href,
+}));
 ---
 
 <header class="fixed top-0 right-0 left-0 z-50 w-full py-4">
@@ -43,9 +50,12 @@ const {
         <li
           data-nav-pill
           aria-hidden="true"
-          class="bg-canvas pointer-events-none absolute top-1.5 bottom-1.5 left-1.5 z-0 rounded-full shadow-none transition-all duration-300 ease-out"
+          class:list={[
+            "bg-canvas pointer-events-none absolute top-1.5 bottom-1.5 left-1.5 z-0 rounded-full shadow-none transition-all duration-300 ease-out",
+            !resolvedItems.some((item) => item.active) && "opacity-0",
+          ]}
         ></li>
-        {items.map((item) => (
+        {resolvedItems.map((item) => (
           <li class="z-10">
             <a
               href={item.href}
@@ -101,7 +111,7 @@ const {
       class="border-canvas/15 mt-3 hidden w-full overflow-hidden rounded-3xl border bg-slate p-2 shadow-none md:hidden"
     >
       <ul class="flex flex-col gap-1">
-        {items.map((item) => (
+        {resolvedItems.map((item) => (
           <li>
             <a
               href={item.href}
@@ -171,16 +181,26 @@ const {
       let currentActiveHref =
         this.querySelector<HTMLAnchorElement>(
           '[data-nav-link][aria-current="page"]',
-        )?.getAttribute("data-nav-link") ?? "#home";
+        )?.getAttribute("data-nav-link") ?? "";
       let isProgrammaticScroll = false;
       let scrollLockTimer: number | undefined;
 
       const updatePillGeometry = (href: string, animate = true) => {
+        if (!activePill) return;
+        if (!href) {
+          activePill.classList.add("opacity-0");
+          return;
+        }
         const targetLink = this.querySelector<HTMLAnchorElement>(
           `[data-nav-link="${href}"]`,
         );
         const parentLi = targetLink?.parentElement;
-        if (!activePill || !targetLink || !parentLi) return;
+        if (!targetLink || !parentLi) {
+          activePill.classList.add("opacity-0");
+          return;
+        }
+
+        activePill.classList.remove("opacity-0");
 
         if (!animate) {
           activePill.style.transition = "none";
@@ -199,7 +219,8 @@ const {
         currentActiveHref = href;
 
         desktopLinks.forEach((link) => {
-          const isActive = link.getAttribute("data-nav-link") === href;
+          const isActive =
+            Boolean(href) && link.getAttribute("data-nav-link") === href;
           if (isActive) {
             link.setAttribute("aria-current", "page");
             link.classList.add("text-ink");
@@ -220,7 +241,8 @@ const {
         });
 
         mobileLinks.forEach((link) => {
-          const isActive = link.getAttribute("data-mobile-nav-link") === href;
+          const isActive =
+            Boolean(href) && link.getAttribute("data-mobile-nav-link") === href;
           if (isActive) {
             link.setAttribute("aria-current", "page");
             link.classList.add("bg-canvas", "text-ink");

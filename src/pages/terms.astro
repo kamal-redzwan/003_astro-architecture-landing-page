@@ -1,0 +1,97 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import FooterSection from "../components/FooterSection.astro";
+---
+
+<Layout
+  title="Terms of Service | Aetherion: Architecture & Spatial Design"
+  description="Terms of Service governing access to the [Agency Name] website, architectural portfolio materials, and inquiry submissions."
+>
+  <NavBar />
+
+  <main class="bg-canvas text-ink w-full pt-32 pb-24 md:pt-40 md:pb-32">
+    <div class="section-container">
+      <div class="section-divider flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div>
+          <span class="text-section-label block">Legal</span>
+          <h1 class="text-display mt-3">Terms of Service</h1>
+        </div>
+        <p class="text-meta md:text-right">
+          Effective Date: [Effective Date]
+        </p>
+      </div>
+
+      <article class="mt-12 max-w-3xl space-y-12 md:mt-16">
+        <section class="space-y-4">
+          <p class="text-body text-base leading-relaxed sm:text-[17px]">
+            These Terms of Service govern your access to and use of the website operated by [Agency Name] ("we", "our", or "us"). By accessing this website or submitting a project inquiry, you agree to comply with these terms.
+          </p>
+        </section>
+
+        <section aria-labelledby="terms-use-of-service" class="space-y-4 border-t border-ink/15 pt-8">
+          <h2 id="terms-use-of-service" class="text-card-title sm:text-2xl">
+            1. Use of Service &amp; Project Inquiries
+          </h2>
+          <p class="text-body leading-relaxed">
+            This website is provided to share our architectural, interior, and spatial design portfolio and to allow prospective clients to initiate project conversations. Submitting an inquiry through our contact form or by email does not establish an architect-client relationship, professional duty of care, or binding design contract.
+          </p>
+          <p class="text-body leading-relaxed">
+            All architectural, interior design, and spatial planning services performed by [Agency Name] are governed exclusively by a separate written consulting or architectural services agreement executed by both parties. When using this website, you agree not to:
+          </p>
+          <ul class="text-body list-disc space-y-2.5 pl-5 leading-relaxed">
+            <li>
+              Submit false, misleading, or unauthorized project or contact information through our inquiry forms.
+            </li>
+            <li>
+              Scrape, harvest, or automated-crawl architectural photography, drawings, or text from this site for commercial redistribution or machine-learning dataset training.
+            </li>
+            <li>
+              Attempt to interfere with the security, availability, or normal operation of the website.
+            </li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="terms-intellectual-property" class="space-y-4 border-t border-ink/15 pt-8">
+          <h2 id="terms-intellectual-property" class="text-card-title sm:text-2xl">
+            2. Intellectual Property Rights
+          </h2>
+          <p class="text-body leading-relaxed">
+            Unless otherwise credited, all content published on this website is the intellectual property of [Agency Name] or its commissioned architectural photographers and collaborators. Protected materials include architectural photographs, floor plans, elevations, renderings, project descriptions, brand marks, and spatial studies.
+          </p>
+          <p class="text-body leading-relaxed">
+            You may view and print individual pages for personal or internal evaluation of [Agency Name] for a prospective commission. You may not reproduce, republish, modify, or commercially exploit any imagery, drawings, or text from this website without prior written permission from [Agency Name] at [Contact Email].
+          </p>
+        </section>
+
+        <section aria-labelledby="terms-limitation-of-liability" class="space-y-4 border-t border-ink/15 pt-8">
+          <h2 id="terms-limitation-of-liability" class="text-card-title sm:text-2xl">
+            3. Disclaimers &amp; Limitation of Liability
+          </h2>
+          <p class="text-body leading-relaxed">
+            Project dimensions, material specifications, budget ranges, and architectural descriptions presented on this website are provided for general informational and portfolio purposes only. They do not constitute engineering, structural, zoning, or construction advice and must not be relied upon for construction or permitting without a formal project engagement.
+          </p>
+          <p class="text-body leading-relaxed">
+            To the maximum extent permitted by the laws of [Jurisdiction], [Agency Name] disclaims all warranties, express or implied, regarding the uninterrupted availability or completeness of this website, and shall not be liable for any indirect, incidental, or consequential damages arising from your use of this site.
+          </p>
+        </section>
+
+        <section aria-labelledby="terms-governing-law" class="space-y-4 border-t border-ink/15 pt-8">
+          <h2 id="terms-governing-law" class="text-card-title sm:text-2xl">
+            4. Governing Law &amp; Contact
+          </h2>
+          <p class="text-body leading-relaxed">
+            These Terms of Service are governed by and construed in accordance with the laws of [Jurisdiction], without regard to conflict-of-law principles. For press permissions, licensing inquiries, or questions regarding these terms, please contact [Agency Name] at [Contact Email] or [Studio Address].
+          </p>
+          <div class="pt-4">
+            <a href="/" class="btn-primary">
+              Return to Homepage
+            </a>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <FooterSection />
+</Layout>

@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import FooterSection from "../components/FooterSection.astro";
+---
+
+<Layout
+  title="404: Page Not Found | Aetherion: Architecture & Spatial Design"
+  description="The page or architectural project you requested could not be found."
+  noindex={true}
+>
+  <NavBar />
+
+  <main class="bg-canvas text-ink flex min-h-[75dvh] w-full items-center pt-32 pb-24 md:pt-40 md:pb-32">
+    <div class="section-container">
+      <div class="section-divider flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <span class="text-section-label block">Error 404</span>
+        <span class="text-meta">Uncharted Blueprint</span>
+      </div>
+
+      <div class="mt-12 max-w-2xl md:mt-16">
+        <h1 class="text-display">This space doesn&apos;t exist.</h1>
+        <p class="text-body mt-6 max-w-lg text-base leading-relaxed">
+          The page or project link you followed has moved or was never built. Return to our studio index to view current residential, cultural, and hospitality work.
+        </p>
+
+        <div class="mt-10 flex flex-wrap items-center gap-4">
+          <a href="/" class="btn-primary">
+            Return to Homepage
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <FooterSection />
+</Layout>
